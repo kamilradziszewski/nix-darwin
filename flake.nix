@@ -33,15 +33,26 @@
           system.stateVersion = 6;
           nixpkgs.hostPlatform = system;
           networking.hostName = hostname;
+          imports = [
+            home-manager.darwinModules.home-manager
+          ];
 
           security.pam.enableSudoTouchIdAuth = true;
+          nixpkgs.config.allowUnfree = true;
 
           environment.shellAliases = {
             switch = "darwin-rebuild switch --flake ~/.config/nix-darwin";
           };
 
-          nixpkgs.config.allowUnfree = true;
-          environment.systemPackages = with nixpkgs.legacyPackages.${system}; [
+          users.users."${username}" = {
+            home = "/Users/${username}";
+            description = username;
+          };
+
+          home-manager = {
+            useGlobalPkgs = true;
+            users.${username} = {pkgs, ...}: {
+              home.packages = with pkgs; [
             alejandra
             fzf
             git
@@ -49,6 +60,9 @@
             tmux
             zoxide
           ];
+              home.stateVersion = "25.05";
+            };
+          };
         }
       ];
     };
