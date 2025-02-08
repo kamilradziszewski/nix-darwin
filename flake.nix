@@ -2,14 +2,19 @@
   description = "nix-darwin flake config";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    nixpkgs = {
+      url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    };
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    darwin = {
+    nix-darwin = {
       url = "github:LnL7/nix-darwin";
       inputs.nixpkgs.follows = "nixpkgs";
+    };
+    nix-homebrew = {
+      url = "github:zhaofengli-wip/nix-homebrew";
     };
   };
 
@@ -17,7 +22,8 @@
     self,
     nixpkgs,
     home-manager,
-    darwin,
+    nix-darwin,
+    nix-homebrew,
     ...
   }: let
     # replace with your own system, username, useremail, and hostname
@@ -26,16 +32,13 @@
     useremail = "__USEREMAIL__";
     hostname = "__HOSTNAME__";
   in {
-    darwinConfigurations."${hostname}" = darwin.lib.darwinSystem {
+    darwinConfigurations."${hostname}" = nix-darwin.lib.darwinSystem {
       inherit system;
       modules = [
         {
           system.stateVersion = 6;
           nixpkgs.hostPlatform = system;
           networking.hostName = hostname;
-          imports = [
-            home-manager.darwinModules.home-manager
-          ];
 
           security.pam.enableSudoTouchIdAuth = true;
           nixpkgs.config.allowUnfree = true;
@@ -49,6 +52,16 @@
             description = username;
           };
 
+          homebrew = {
+            enable = true;
+            casks = [
+              "clocker"
+            ];
+          };
+        }
+
+        home-manager.darwinModules.home-manager
+        {
           home-manager = {
             useGlobalPkgs = true;
             users.${username} = {pkgs, ...}: {
@@ -62,6 +75,15 @@
           ];
               home.stateVersion = "25.05";
             };
+          };
+        }
+
+        nix-homebrew.darwinModules.nix-homebrew
+        {
+          nix-homebrew = {
+            enable = true;
+            enableRosetta = true;
+            user = username;
           };
         }
       ];
