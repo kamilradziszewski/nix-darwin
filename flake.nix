@@ -36,7 +36,6 @@
       inherit system;
       modules = [
         {
-          system.stateVersion = 6;
           nixpkgs.hostPlatform = system;
           networking.hostName = hostname;
 
@@ -88,6 +87,8 @@
             user = username;
           };
         }
+
+        ./modules/system.nix
       ];
     };
 
