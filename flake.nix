@@ -26,11 +26,12 @@
     nix-homebrew,
     ...
   }: let
-    # replace with your own system, username, useremail, and hostname
-    system = "__SYSTEM__"; # aarch64-darwin or x86_64-darwin
-    username = "__USERNAME__";
-    useremail = "__USEREMAIL__";
-    hostname = "__HOSTNAME__";
+    machine = import ./machine.nix;
+
+    system = machine.system;
+    username = machine.username;
+    useremail = machine.useremail;
+    hostname = machine.hostname;
   in {
     darwinConfigurations."${hostname}" = nix-darwin.lib.darwinSystem {
       inherit system;
@@ -67,13 +68,13 @@
             useGlobalPkgs = true;
             users.${username} = {pkgs, ...}: {
               home.packages = with pkgs; [
-            alejandra
-            fzf
-            git
-            oh-my-posh
-            tmux
-            zoxide
-          ];
+                alejandra
+                fzf
+                git
+                oh-my-posh
+                tmux
+                zoxide
+              ];
               home.stateVersion = "25.05";
             };
           };
