@@ -45,6 +45,7 @@
 
           environment.shellAliases = {
             switch = "darwin-rebuild switch --flake ~/.config/nix-darwin";
+            nr = "npm run ";
           };
 
           users.users."${username}" = {
@@ -54,9 +55,10 @@
 
           homebrew = {
             enable = true;
-            casks = [
-              "clocker"
-            ];
+            casks = [];
+            onActivation.cleanup = "zap";
+            onActivation.autoUpdate = true;
+            onActivation.upgrade = true;
           };
         }
 
