@@ -63,31 +63,10 @@
         }
 
         home-manager.darwinModules.home-manager
-        {
-          home-manager = {
-            useGlobalPkgs = true;
-            users.${username} = {pkgs, ...}: {
-              home.packages = with pkgs; [
-                alejandra
-                fzf
-                git
-                oh-my-posh
-                tmux
-                zoxide
-              ];
-              home.stateVersion = "25.05";
-            };
-          };
-        }
+        (import ./modules/home-manager.nix {inherit nixpkgs username;})
 
         nix-homebrew.darwinModules.nix-homebrew
-        {
-          nix-homebrew = {
-            enable = true;
-            enableRosetta = true;
-            user = username;
-          };
-        }
+        (import ./modules/nix-homebrew.nix {inherit username;})
 
         ./modules/system.nix
       ];
