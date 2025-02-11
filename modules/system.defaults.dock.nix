@@ -5,7 +5,11 @@
 
   # Sets the speed of the autohide delay. The default is given in the example.
   # autohide-delay = 1.0;
-  autohide-delay = null;
+  # autohide-delay = null;
+  autohide-delay = 0.0;
+
+  # Whether to minimize windows into their application icon. The default is false.
+  minimize-to-application = false;
 
   # Position of the dock on screen. The default is "bottom".
   orientation = "left";

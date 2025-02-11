@@ -6,7 +6,9 @@
   pkgs = nixpkgs.pkgs;
 in {
   home-manager = {
+    home.stateVersion = "25.05";
     useGlobalPkgs = true;
+
     users.${username} = {pkgs, ...}: {
       home.packages = with pkgs; [
         alejandra
@@ -16,7 +18,10 @@ in {
         tmux
         zoxide
       ];
-      home.stateVersion = "25.05";
+
+      home.file = {
+        ".config/ghostty/config".source = ../dotfiles/ghostty;
+      };
     };
   };
 }

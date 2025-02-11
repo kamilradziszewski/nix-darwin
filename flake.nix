@@ -55,7 +55,10 @@
 
           homebrew = {
             enable = true;
-            casks = [];
+            casks = [
+              "ghostty"
+              "raycast"
+            ];
             onActivation.cleanup = "zap";
             onActivation.autoUpdate = true;
             onActivation.upgrade = true;
