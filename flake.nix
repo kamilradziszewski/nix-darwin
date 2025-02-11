@@ -55,13 +55,11 @@
 
           homebrew = {
             enable = true;
-            casks = [
-              "ghostty"
-              "raycast"
-            ];
             onActivation.cleanup = "zap";
             onActivation.autoUpdate = true;
             onActivation.upgrade = true;
+
+            inherit (import ./modules/homebrew-apps.nix) brews casks masApps;
           };
         }
 
