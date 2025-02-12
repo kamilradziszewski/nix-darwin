@@ -10,6 +10,10 @@ in {
   home-manager.users.${username} = {pkgs, ...}: {
     home.stateVersion = "25.05";
 
+    home.sessionVariables = {
+      HOMEBREW_NO_ENV_HINTS = "1";
+    };
+
     home.packages = with pkgs; [
       alejandra
       fzf
