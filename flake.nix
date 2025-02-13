@@ -45,8 +45,11 @@
 
           environment.shellAliases = {
             switch = "darwin-rebuild switch --flake ~/.config/nix-darwin";
-            nr = "npm run ";
           };
+
+          # environment.variables = {
+          #   HOMEBREW_NO_ENV_HINTS = "1";
+          # };
 
           users.users."${username}" = {
             home = "/Users/${username}";
