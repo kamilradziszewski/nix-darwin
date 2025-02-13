@@ -16,6 +16,7 @@ in {
 
     home.packages = with pkgs; [
       alejandra
+      bat
       fzf
       git
       oh-my-posh
@@ -29,6 +30,13 @@ in {
 
     programs = {
       zsh = {
+        plugins = [
+          {
+            name = "you-should-use";
+            src = "${pkgs.zsh-you-should-use}/share/zsh/plugins/you-should-use";
+          }
+        ];
+
         enable = true;
         enableCompletion = true;
         autosuggestion.enable = true;
@@ -37,15 +45,13 @@ in {
         shellAliases = {
           nr = "npm run ";
           ll = "ls -alh";
+          cat = "bat";
         };
 
         oh-my-zsh = {
           enable = true;
           plugins = [
             "git"
-            "git-commit"
-            "you-should-use"
-            "zsh-bat"
           ];
           # theme = "robbyrussell";
           # theme = "agnoster";
