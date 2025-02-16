@@ -102,8 +102,19 @@ in
           };
 
           extensions = [
+            pkgs.vscode-marketplace.bradlc.vscode-tailwindcss
+            pkgs.vscode-marketplace.codeium.codeium
+            pkgs.vscode-marketplace.dbaeumer.vscode-eslint
+            pkgs.vscode-marketplace.dejmedus.tailwind-sorter
             pkgs.vscode-marketplace.eamodio.gitlens
+            pkgs.vscode-marketplace.esbenp.prettier-vscode
+            pkgs.vscode-marketplace.formulahendry.auto-rename-tag
             pkgs.vscode-marketplace.jnoortheen.nix-ide
+            # pkgs.vscode-marketplace.ecmel.vscode-html-css
+            # pkgs.vscode-marketplace.irongeek.vscode-env
+            # pkgs.vscode-marketplace.kuscamara.remove-unused-imports
+            # pkgs.vscode-marketplace.steoates.autoimport
+            # pkgs.vscode-marketplace.streetsidesoftware.code-spell-checker
           ];
         };
       };
