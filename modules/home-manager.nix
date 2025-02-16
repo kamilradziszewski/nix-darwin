@@ -99,6 +99,12 @@ in
             "window.zoomLevel" = 0.5;
 
             "diffEditor.hideUnchangedRegions.enabled" = true;
+
+            "security.workspace.trust.untrustedFiles" = "open";
+            "security.workspace.trust.enabled" = true;
+            "security.workspace.trust.startupPrompt" = "never";
+
+            "workbench.startupEditor" = "none";
           };
 
           extensions = [
