@@ -1,5 +1,5 @@
 {
-  brews = [];
+  brews = [ ];
 
   casks = [
     "chatgpt"
@@ -7,5 +7,5 @@
     "raycast"
   ];
 
-  masApps = {};
+  masApps = { };
 }

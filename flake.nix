@@ -21,69 +21,72 @@
     };
   };
 
-  outputs = inputs @ {
-    self,
-    nixpkgs,
-    home-manager,
-    nix-darwin,
-    nix-homebrew,
-    nix-vscode-extensions,
-    ...
-  }: let
-    machine = import ./machine.nix;
+  outputs =
+    inputs@{
+      self,
+      nixpkgs,
+      home-manager,
+      nix-darwin,
+      nix-homebrew,
+      nix-vscode-extensions,
+      ...
+    }:
+    let
+      machine = import ./machine.nix;
 
-    system = machine.system;
-    username = machine.username;
-    useremail = machine.useremail;
-    hostname = machine.hostname;
-  in {
-    darwinConfigurations."${hostname}" = nix-darwin.lib.darwinSystem {
-      inherit system;
-      modules = [
-        {
-          nixpkgs.hostPlatform = system;
-          networking.hostName = hostname;
+      system = machine.system;
+      username = machine.username;
+      useremail = machine.useremail;
+      hostname = machine.hostname;
+    in
+    {
+      darwinConfigurations."${hostname}" = nix-darwin.lib.darwinSystem {
+        inherit system;
+        modules = [
+          {
+            nixpkgs.hostPlatform = system;
+            networking.hostName = hostname;
 
-          security.pam.enableSudoTouchIdAuth = true;
-          nixpkgs.config.allowUnfree = true;
+            security.pam.enableSudoTouchIdAuth = true;
+            nixpkgs.config.allowUnfree = true;
 
-          nixpkgs.overlays = [
-            nix-vscode-extensions.overlays.default
-          ];
+            nixpkgs.overlays = [
+              nix-vscode-extensions.overlays.default
+            ];
 
-          environment.shellAliases = {
-            switch = "darwin-rebuild switch --flake ~/.config/nix-darwin";
-          };
+            environment.shellAliases = {
+              switch = "darwin-rebuild switch --flake ~/.config/nix-darwin";
+            };
 
-          # environment.variables = {
-          #   HOMEBREW_NO_ENV_HINTS = "1";
-          # };
+            # environment.variables = {
+            #   HOMEBREW_NO_ENV_HINTS = "1";
+            # };
 
-          users.users."${username}" = {
-            home = "/Users/${username}";
-            description = username;
-          };
+            users.users."${username}" = {
+              home = "/Users/${username}";
+              description = username;
+            };
 
-          homebrew = {
-            enable = true;
-            onActivation.cleanup = "zap";
-            onActivation.autoUpdate = true;
-            onActivation.upgrade = true;
+            homebrew = {
+              enable = true;
+              onActivation.cleanup = "zap";
+              onActivation.autoUpdate = true;
+              onActivation.upgrade = true;
 
-            inherit (import ./modules/homebrew-apps.nix) brews casks masApps;
-          };
-        }
+              inherit (import ./modules/homebrew-apps.nix) brews casks masApps;
+            };
+          }
 
-        home-manager.darwinModules.home-manager
-        (import ./modules/home-manager.nix {inherit nixpkgs username;})
+          home-manager.darwinModules.home-manager
+          (import ./modules/home-manager.nix { inherit nixpkgs username; })
 
-        nix-homebrew.darwinModules.nix-homebrew
-        (import ./modules/nix-homebrew.nix {inherit username;})
+          nix-homebrew.darwinModules.nix-homebrew
+          (import ./modules/nix-homebrew.nix { inherit username; })
 
-        ./modules/system.nix
-      ];
+          ./modules/system.nix
+        ];
+      };
+
+      formatter.${system} = nixpkgs.legacyPackages.${system}.alejandra;
     };
-
-    formatter.${system} = nixpkgs.legacyPackages.${system}.alejandra;
-  };
 }
