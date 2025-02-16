@@ -15,10 +15,10 @@ in {
     # };
 
     home.packages = with pkgs; [
-      alejandra
       bat
       fzf
       git
+      nixfmt-rfc-style
       oh-my-posh
       tmux
       zoxide
@@ -64,10 +64,43 @@ in {
 
       oh-my-posh = {
         enable = true;
+        enableZshIntegration = true;
         # useTheme = "cobalt2";
         # useTheme = "M365Princess";
         # useTheme = "dracula";
         useTheme = "marcduiker";
+      };
+
+      vscode = {
+        enable = true;
+
+        userSettings = {
+          # This property will be used to generate settings.json:
+          # https://code.visualstudio.com/docs/getstarted/settings#_settingsjson
+          "editor.formatOnSave" = true;
+          "editor.codeActionsOnSave" = {
+            "source.addMissingImports" = "explicit";
+            "source.organizeImports" = "explicit";
+            # "source.removeUnusedImports" = "explicit";
+          };
+
+          "workbench.sideBar.location" = "right";
+          "editor.minimap.enabled" = false;
+
+          "editor.fontFamily" =
+            "OperatorMono Nerd Font, JetBrainsMono Nerd Font, Menlo, Monaco, 'Courier New', monospace";
+          "editor.fontLigatures" = false;
+          "editor.fontSize" = 14;
+
+          "window.zoomLevel" = 0.5;
+
+          "diffEditor.hideUnchangedRegions.enabled" = true;
+        };
+
+        extensions = [
+          pkgs.vscode-marketplace.eamodio.gitlens
+          pkgs.vscode-marketplace.jnoortheen.nix-ide
+        ];
       };
     };
   };

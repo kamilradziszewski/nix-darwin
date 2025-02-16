@@ -16,6 +16,9 @@
     nix-homebrew = {
       url = "github:zhaofengli-wip/nix-homebrew";
     };
+    nix-vscode-extensions = {
+      url = "github:nix-community/nix-vscode-extensions";
+    };
   };
 
   outputs = inputs @ {
@@ -24,6 +27,7 @@
     home-manager,
     nix-darwin,
     nix-homebrew,
+    nix-vscode-extensions,
     ...
   }: let
     machine = import ./machine.nix;
@@ -42,6 +46,10 @@
 
           security.pam.enableSudoTouchIdAuth = true;
           nixpkgs.config.allowUnfree = true;
+
+          nixpkgs.overlays = [
+            nix-vscode-extensions.overlays.default
+          ];
 
           environment.shellAliases = {
             switch = "darwin-rebuild switch --flake ~/.config/nix-darwin";
