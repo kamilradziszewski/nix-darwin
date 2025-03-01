@@ -1,0 +1,4 @@
+hs.hotkey.bind({ "alt" }, "R", function()
+    hs.reload()
+end)
+hs.alert.show("Hammerspoon config loaded")

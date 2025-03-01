@@ -1,5 +1,4 @@
-{ username, ... }:
-{
+{username, ...}: {
   nix-homebrew = {
     enable = true;
     enableRosetta = true;

@@ -1,148 +1,230 @@
 {
   nixpkgs,
   username,
+  mac-app-util,
   ...
-}:
-let
+}: let
   pkgs = nixpkgs.pkgs;
-in
-{
+in {
   home-manager.useGlobalPkgs = true;
 
-  home-manager.users.${username} =
-    { pkgs, ... }:
-    {
-      home.stateVersion = "25.05";
+  home-manager.sharedModules = [
+    mac-app-util.homeManagerModules.default
+  ];
 
-      # home.sessionVariables = {
-      #   HOMEBREW_NO_ENV_HINTS = "1";
-      # };
+  home-manager.users.${username} = {pkgs, ...}: {
+    home.stateVersion = "25.05";
 
-      home.packages = with pkgs; [
-        bat
-        fzf
-        git
-        nixfmt-rfc-style
-        oh-my-posh
-        tmux
-        zoxide
-      ];
+    # home.sessionVariables = {
+    #   HOMEBREW_NO_ENV_HINTS = "1";
+    # };
 
-      home.file = {
-        ".config/ghostty/config".source = ../dotfiles/ghostty;
+    home.packages = with pkgs; [
+      alejandra
+      bat
+      fzf
+      git
+      nodejs_22
+      oh-my-posh
+      tmux
+    ];
+
+    home.file = {
+      ".config/ghostty/config".source = ../dotfiles/ghostty;
+      ".hammerspoon/init.lua".source = ../dotfiles/hammerspoon;
+    };
+
+    programs = {
+      zsh = {
+        plugins = [
+          {
+            name = "you-should-use";
+            src = "${pkgs.zsh-you-should-use}/share/zsh/plugins/you-should-use";
+          }
+        ];
+
+        enable = true;
+        enableCompletion = true;
+        autosuggestion.enable = true;
+        syntaxHighlighting.enable = true;
+
+        shellAliases = {
+          nr = "npm run ";
+          ll = "ls -alh";
+          cat = "bat";
+        };
+
+        oh-my-zsh = {
+          enable = true;
+          plugins = [
+            "git"
+          ];
+          # theme = "robbyrussell";
+          # theme = "agnoster";
+        };
+
+        # initExtra = ''
+        #   export HOMEBREW_NO_ENV_HINTS=1
+        # '';
       };
 
-      programs = {
-        zsh = {
-          plugins = [
-            {
-              name = "you-should-use";
-              src = "${pkgs.zsh-you-should-use}/share/zsh/plugins/you-should-use";
-            }
-          ];
+      oh-my-posh = {
+        enable = true;
+        enableZshIntegration = true;
+        # useTheme = "cobalt2";
+        # useTheme = "M365Princess";
+        # useTheme = "dracula";
+        useTheme = "marcduiker";
+      };
 
-          enable = true;
-          enableCompletion = true;
-          autosuggestion.enable = true;
-          syntaxHighlighting.enable = true;
+      zoxide = {
+        enable = true;
+        enableZshIntegration = true;
+        options = ["--cmd cd"];
+      };
 
-          shellAliases = {
-            nr = "npm run ";
-            ll = "ls -alh";
-            cat = "bat";
-          };
+      vscode = {
+        enable = true;
 
-          oh-my-zsh = {
-            enable = true;
-            plugins = [
-              "git"
-            ];
-            # theme = "robbyrussell";
-            # theme = "agnoster";
-          };
+        #          extensions = [
+        #             pkgs.vscode-marketplace.formulahendry.auto-rename-tag
+        #          pkgs.vscode-marketplace.bradlc.vscode-tailwindcss
+        #         pkgs.vscode-marketplace.dbaeumer.vscode-eslint
+        #        pkgs.vscode-marketplace.dejmedus.tailwind-sorter
+        #       pkgs.vscode-marketplace.dsznajder.es7-react-js-snippets
+        #      pkgs.vscode-marketplace.eamodio.gitlens
+        #     pkgs.vscode-marketplace.esbenp.prettier-vscode
+        #    pkgs.vscode-marketplace.kamadorueda.alejandra
+        #   pkgs.vscode-marketplace.Continue.continue
+        #];
 
-          # initExtra = ''
-          #   export HOMEBREW_NO_ENV_HINTS=1
-          # '';
-        };
+        profiles = {
+          default = {
+            userSettings = {
+              # This property will be used to generate settings.json:
+              # https://code.visualstudio.com/docs/getstarted/settings#_settingsjson
 
-        oh-my-posh = {
-          enable = true;
-          enableZshIntegration = true;
-          # useTheme = "cobalt2";
-          # useTheme = "M365Princess";
-          # useTheme = "dracula";
-          useTheme = "marcduiker";
-        };
+              "workbench.sideBar.location" = "right";
+              "editor.minimap.enabled" = false;
 
-        vscode = {
-          enable = true;
+              "editor.accessibilitySupport" = "off";
 
-          userSettings = {
-            # This property will be used to generate settings.json:
-            # https://code.visualstudio.com/docs/getstarted/settings#_settingsjson
-            "editor.formatOnSave" = true;
-            "editor.codeActionsOnSave" = {
-              "source.addMissingImports" = "explicit";
-              "source.organizeImports" = "explicit";
-              # "source.removeUnusedImports" = "explicit";
+              "editor.fontFamily" = "OperatorMono Nerd Font, JetBrainsMono Nerd Font, Menlo, Monaco, 'Courier New', monospace";
+              "editor.fontLigatures" = false;
+              "editor.fontSize" = 15;
+
+              "window.zoomLevel" = 0.5;
+
+              "diffEditor.hideUnchangedRegions.enabled" = true;
+
+              "editor.formatOnSave" = true;
+              "editor.formatOnPaste" = false;
+              "editor.formatOnType" = false;
+              "editor.trimAutoWhitespace" = true;
+              "files.trimTrailingWhitespace" = true;
+              "files.insertFinalNewline" = true;
+              "editor.defaultFormatter" = "esbenp.prettier-vscode";
+
+              "editor.codeActionsOnSave" = {
+                "source.fixAll" = "explicit";
+                "source.addMissingImports" = "explicit";
+                "source.organizeImports" = "explicit";
+              };
+              "eslint.validate" = ["javascript" "typescript" "javascriptreact" "typescriptreact"];
+              "typescript.suggest.autoImports" = true;
+
+              "security.workspace.trust.untrustedFiles" = "open";
+              "security.workspace.trust.enabled" = true;
+              "security.workspace.trust.startupPrompt" = "never";
+
+              "workbench.startupEditor" = "none";
+
+              "search.quickOpen.history.filterSortOrder" = "recency";
+
+              "workbench.editor.showTabs" = "none";
+              # "workbench.editor.showTabs" = "single";
+              # "workbench.editor.enablePreview" = false;
+              # "explorer.openEditors.visible" = 0;
+
+              # "nix.formatterPath"= "/Users/kamil/.nix-profile/bin/alejandra";
+
+              "[typescript]" = {
+                "editor.defaultFormatter" = "esbenp.prettier-vscode";
+              };
+              "[typescriptreact]" = {
+                "editor.defaultFormatter" = "esbenp.prettier-vscode";
+              };
+              "[json]" = {
+                "editor.defaultFormatter" = "esbenp.prettier-vscode";
+              };
+              "[javascript]" = {
+                "editor.defaultFormatter" = "esbenp.prettier-vscode";
+              };
+              "[html]" = {
+                "editor.defaultFormatter" = "esbenp.prettier-vscode";
+              };
+              "[css]" = {
+                "editor.defaultFormatter" = "esbenp.prettier-vscode";
+              };
+              "[scss]" = {
+                "editor.defaultFormatter" = "esbenp.prettier-vscode";
+              };
+              "[nix]" = {
+                "editor.defaultFormatter" = "kamadorueda.alejandra";
+                "editor.formatOnPaste" = true;
+                "editor.formatOnSave" = true;
+                "editor.formatOnType" = false;
+              };
+              "[lua]" = {
+                "editor.defaultFormatter" = "sumneko.lua";
+              };
             };
 
-            "workbench.sideBar.location" = "right";
-            "editor.minimap.enabled" = false;
+            extensions = import ./vscode/extensions.nix {inherit pkgs;};
 
-            "editor.fontFamily" =
-              "OperatorMono Nerd Font, JetBrainsMono Nerd Font, Menlo, Monaco, 'Courier New', monospace";
-            "editor.fontLigatures" = false;
-            "editor.fontSize" = 14;
-
-            "window.zoomLevel" = 0.5;
-
-            "diffEditor.hideUnchangedRegions.enabled" = true;
-
-            "security.workspace.trust.untrustedFiles" = "open";
-            "security.workspace.trust.enabled" = true;
-            "security.workspace.trust.startupPrompt" = "never";
-
-            "workbench.startupEditor" = "none";
-          };
-
-          extensions = [
-            pkgs.vscode-marketplace.bradlc.vscode-tailwindcss
-            pkgs.vscode-marketplace.codeium.codeium
-            pkgs.vscode-marketplace.dbaeumer.vscode-eslint
-            pkgs.vscode-marketplace.dejmedus.tailwind-sorter
-            pkgs.vscode-marketplace.eamodio.gitlens
-            pkgs.vscode-marketplace.esbenp.prettier-vscode
-            pkgs.vscode-marketplace.formulahendry.auto-rename-tag
-            pkgs.vscode-marketplace.jnoortheen.nix-ide
-            # pkgs.vscode-marketplace.ecmel.vscode-html-css
-            # pkgs.vscode-marketplace.irongeek.vscode-env
-            # pkgs.vscode-marketplace.kuscamara.remove-unused-imports
-            # pkgs.vscode-marketplace.steoates.autoimport
-            # pkgs.vscode-marketplace.streetsidesoftware.code-spell-checker
-          ];
-
-          languageSnippets = {
-            typescriptreact = {
-              "React Functional Component" = {
-                "prefix" = [ "ffc" ];
-                "body" = [
-                  "import { FC } from \"react\";"
-                  "interface \${TM_FILENAME_BASE}Props {}"
-                  ""
-                  "const \$TM_FILENAME_BASE: FC<\${TM_FILENAME_BASE}Props> = () => {"
-                  "  return <div>null$2</div>"
-                  "};"
-                  ""
-                  "export default \$TM_FILENAME_BASE"
-                  ""
-                ];
-                "description" = "React Functional Component";
+            languageSnippets = {
+              typescriptreact = {
+                "React Functional Component" = {
+                  "prefix" = ["ffc"];
+                  "body" = [
+                    "import { FC } from \"react\";"
+                    "interface \${TM_FILENAME_BASE}Props {}"
+                    ""
+                    "const \$TM_FILENAME_BASE: FC<\${TM_FILENAME_BASE}Props> = () => {"
+                    "  return <div>null$2</div>"
+                    "};"
+                    ""
+                    "export default \$TM_FILENAME_BASE"
+                    ""
+                  ];
+                  "description" = "React Functional Component";
+                };
               };
             };
           };
         };
       };
+
+      chromium = {
+        enable = true;
+        package = pkgs.brave;
+
+        commandLineArgs = [
+          "--rewards=disabled"
+          "--autoplay-policy=user-gesture-required"
+        ];
+
+        extensions = [
+          {id = "nngceckbapebfimnlniiiahkandclblb";} # Bitwarden Password Manager
+          # pkgs.chromium-ublock-origin
+          # pkgs.chromium-privacy-badger
+          # pkgs.chromium-dark-reader
+          # pkgs.chromium-https-everywhere
+          # pkgs.chromium-privacy-redirect
+          # pkgs.chromium-privacy-pass
+          # pkgs.chromium-privacy-settings
+        ];
+      };
     };
+  };
 }

@@ -4,11 +4,9 @@
 
 - Install nix using the [Determinate Nix Installer](https://github.com/DeterminateSystems/nix-installer); **make sure you use it without the `--determinate` flag.** The `--determinate` flag installs the Determinate Nix distribution which does not work out of the box with nix-darwin.
 
-`curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install`
-
-<!-- - Install `nix-darwin`
-
-`nix run nix-darwin/master#darwin-rebuild -- switch` -->
+```
+curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install
+```
 
 - Create nix config directory:
 
@@ -42,10 +40,10 @@ sudo scutil --set LocalHostName __YOUR_HOSTNAME__
 dscacheutil -flushcache
 ```
 
-- Change system, username, useremail, and hostname in the `flake.nix` file
+- Change system, username, useremail, and hostname in the `machine.nix` file
 
-You can check current values with
-`whoami`, `scutil --get HostName`, and `scutil --get LocalHostName`
+> You can check current values with
+> `whoami`, `scutil --get HostName`, and `scutil --get LocalHostName`
 
 - Build the flake running:
 
@@ -65,11 +63,26 @@ softwareupdate --install-roseta
 
 Rebuild flake:
 
-`darwin-rebuild switch --flake ~/.config/nix-darwin`
+```
+darwin-rebuild switch --flake ~/.config/nix-darwin
+
+alias: switch
+```
 
 Garbage collection:
 
-`nix-collect-garbage -d`
+```
+nix-collect-garbage -d
+
+alias: switch-clean
+```
+
+Update:
+
+```
+nix --extra-experimental-features 'nix-command flakes' flake update
+alias: switch-update
+```
 
 ## Links
 

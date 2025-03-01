@@ -19,74 +19,79 @@
     nix-vscode-extensions = {
       url = "github:nix-community/nix-vscode-extensions";
     };
+    mac-app-util = {
+      url = "github:hraban/mac-app-util";
+    };
   };
 
-  outputs =
-    inputs@{
-      self,
-      nixpkgs,
-      home-manager,
-      nix-darwin,
-      nix-homebrew,
-      nix-vscode-extensions,
-      ...
-    }:
-    let
-      machine = import ./machine.nix;
+  outputs = inputs @ {
+    self,
+    nixpkgs,
+    home-manager,
+    nix-darwin,
+    nix-homebrew,
+    nix-vscode-extensions,
+    mac-app-util,
+    ...
+  }: let
+    machine = import ./machine.nix;
 
-      system = machine.system;
-      username = machine.username;
-      useremail = machine.useremail;
-      hostname = machine.hostname;
-    in
-    {
-      darwinConfigurations."${hostname}" = nix-darwin.lib.darwinSystem {
-        inherit system;
-        modules = [
-          {
-            nixpkgs.hostPlatform = system;
-            networking.hostName = hostname;
+    system = machine.system;
+    username = machine.username;
+    useremail = machine.useremail;
+    hostname = machine.hostname;
+  in {
+    darwinConfigurations."${hostname}" = nix-darwin.lib.darwinSystem {
+      inherit system;
+      modules = [
+        {
+          nixpkgs.hostPlatform = system;
+          networking.hostName = hostname;
 
-            security.pam.enableSudoTouchIdAuth = true;
-            nixpkgs.config.allowUnfree = true;
+          security.pam.services.sudo_local.touchIdAuth = true;
+          nixpkgs.config.allowUnfree = true;
 
-            nixpkgs.overlays = [
-              nix-vscode-extensions.overlays.default
-            ];
+          nixpkgs.overlays = [
+            nix-vscode-extensions.overlays.default
+          ];
 
-            environment.shellAliases = {
-              switch = "darwin-rebuild switch --flake ~/.config/nix-darwin";
-            };
+          environment.shellAliases = {
+            switch = "darwin-rebuild switch --flake ~/.config/nix-darwin";
+            switch-update = "nix --extra-experimental-features 'nix-command flakes' flake update --flake ~/.config/nix-darwin";
+            switch-clean = "nix-collect-garbage -d";
+          };
 
-            # environment.variables = {
-            #   HOMEBREW_NO_ENV_HINTS = "1";
-            # };
+          # environment.variables = {
+          #   HOMEBREW_NO_ENV_HINTS = "1";
+          # };
 
-            users.users."${username}" = {
-              home = "/Users/${username}";
-              description = username;
-            };
+          users.users."${username}" = {
+            home = "/Users/${username}";
+            description = username;
+          };
 
-            homebrew = {
-              enable = true;
-              onActivation.cleanup = "zap";
-              onActivation.autoUpdate = true;
-              onActivation.upgrade = true;
+          homebrew = {
+            enable = true;
+            onActivation.cleanup = "zap";
+            onActivation.autoUpdate = true;
+            onActivation.upgrade = true;
 
-              inherit (import ./modules/homebrew-apps.nix) brews casks masApps;
-            };
-          }
+            inherit (import ./modules/homebrew-apps.nix) brews casks masApps;
+          };
+        }
 
-          home-manager.darwinModules.home-manager
-          (import ./modules/home-manager.nix { inherit nixpkgs username; })
+        mac-app-util.darwinModules.default
 
-          nix-homebrew.darwinModules.nix-homebrew
-          (import ./modules/nix-homebrew.nix { inherit username; })
+        home-manager.darwinModules.home-manager
+        (import ./modules/home-manager.nix {inherit nixpkgs username mac-app-util;})
 
-          ./modules/system.nix
-        ];
-      };
+        nix-homebrew.darwinModules.nix-homebrew
+        (import ./modules/nix-homebrew.nix {inherit username;})
 
-      formatter.${system} = nixpkgs.legacyPackages.${system}.alejandra;
+        ./modules/system.nix
+      ];
     };
+
+    formatter.${system} = nixpkgs.legacyPackages.${system}.alejandra;
+  };
 }
