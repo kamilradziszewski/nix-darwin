@@ -2,6 +2,7 @@
   nixpkgs,
   username,
   mac-app-util,
+  nixvim,
   ...
 }: let
   pkgs = nixpkgs.pkgs;
@@ -14,6 +15,7 @@ in {
 
   home-manager.users.${username} = {pkgs, ...}: {
     home.stateVersion = "25.05";
+    imports = [nixvim.homeManagerModules.nixvim];
 
     # home.sessionVariables = {
     #   HOMEBREW_NO_ENV_HINTS = "1";
@@ -81,6 +83,32 @@ in {
         enable = true;
         enableZshIntegration = true;
         options = ["--cmd cd"];
+      };
+
+      nixvim = {
+        enable = true;
+
+        opts = {
+          number = true;
+          relativenumber = true;
+          cursorline = true;
+          cursorcolumn = true;
+          expandtab = true;
+          shiftwidth = 2;
+          tabstop = 2;
+          smartindent = true;
+          # wrap = false;
+          # termguicolors = true;
+          # clipboard = "unnamedplus";
+          # undofile = true;
+          # undodir = "${XDG_STATE_HOME}/nvim/undo";
+        };
+
+        plugins = {
+          lualine = {
+            enable = true;
+          };
+        };
       };
 
       vscode = {

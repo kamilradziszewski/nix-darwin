@@ -22,6 +22,10 @@
     mac-app-util = {
       url = "github:hraban/mac-app-util";
     };
+    nixvim = {
+      url = "github:nix-community/nixvim";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs @ {
@@ -32,6 +36,7 @@
     nix-homebrew,
     nix-vscode-extensions,
     mac-app-util,
+    nixvim,
     ...
   }: let
     machine = import ./machine.nix;
@@ -83,7 +88,7 @@
         mac-app-util.darwinModules.default
 
         home-manager.darwinModules.home-manager
-        (import ./modules/home-manager.nix {inherit nixpkgs username mac-app-util;})
+        (import ./modules/home-manager.nix {inherit nixpkgs username mac-app-util nixvim;})
 
         nix-homebrew.darwinModules.nix-homebrew
         (import ./modules/nix-homebrew.nix {inherit username;})
