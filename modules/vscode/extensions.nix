@@ -12,6 +12,8 @@ let
       jnoortheen.nix-ide # Nix ide
       esbenp.prettier-vscode # Prettier - Code formatter
       bradlc.vscode-tailwindcss # Tailwind CSS IntelliSense
+      catppuccin.catppuccin-vsc # Catppuccin for VSCode
+
       # usernamehw.remove-empty-lines # Remove empty lines
       # arrterian.nix-env-selector # Nix Environment Selector
 

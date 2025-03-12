@@ -1,6 +1,8 @@
 {
   enable = true;
 
+  colorscheme = "catppuccin-mocha";
+
   opts = {
     number = true;
     relativenumber = true;

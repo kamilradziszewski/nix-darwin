@@ -75,6 +75,22 @@ in
                 # This property will be used to generate settings.json:
                 # https://code.visualstudio.com/docs/getstarted/settings#_settingsjson
 
+                "workbench.colorTheme" = "Catppuccin Mocha";
+                "catppuccin.accentColor" = "pink";
+                "catppuccin.colorOverrides" = {
+                  "mocha" = {
+                    "base" = "#000000";
+                    "mantle" = "#010101";
+                    "crust" = "#020202";
+                  };
+                };
+                "catppuccin.customUIColors" = {
+                  "mocha" = {
+                    "statusBar.foreground" = "accent";
+                  };
+                };
+
+
                 "workbench.sideBar.location" = "right";
                 "editor.minimap.enabled" = false;
 
