@@ -6,10 +6,9 @@
     "chatgpt"
     "ghostty"
     "hammerspoon"
-    "raycast"
+    "oversight"
+    "raindropio"
   ];
 
-  masApps = {
-    "Anybox - Bookmark & Read Later" = 1593408455;
-  };
+  masApps = { };
 }
