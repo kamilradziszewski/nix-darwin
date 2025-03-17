@@ -20,7 +20,6 @@ in
       home.stateVersion = "25.05";
       imports = [ nixvim.homeManagerModules.nixvim ];
 
-
       home.packages = with pkgs; [
         bat
         fzf
@@ -44,18 +43,12 @@ in
           ../dotfiles/hammerspoon/SpoonInstall.spoon/init.lua;
       };
 
-
       programs = {
         zsh = import ./home-manager/programs/zsh.nix { inherit pkgs; };
         oh-my-posh = import ./home-manager/programs/oh-my-posh.nix;
         zoxide = import ./home-manager/programs/zoxide.nix;
         chromium = import ./home-manager/programs/chromium.nix { inherit pkgs; };
         nixvim = import ./home-manager/programs/nixvim.nix;
-
-        direnv = {
-          enable = true;
-          nix-direnv.enable = true;
-        };
 
         vscode = {
           enable = true;
@@ -179,10 +172,10 @@ in
                   "editor.formatOnSave" = true;
                   "editor.formatOnType" = false;
                   "remove-empty-lines.allowedNumberOfEmptyLines" = 1;
-
                 };
                 "[lua]" = {
                   "editor.defaultFormatter" = "sumneko.lua";
+                  "remove-empty-lines.allowedNumberOfEmptyLines" = 1;
                 };
                 "[toml]" = {
                   "editor.defaultFormatter" = "tamasfe.even-better-toml";
