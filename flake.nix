@@ -71,6 +71,7 @@
               switch = "darwin-rebuild switch --flake ~/.config/nix-darwin";
               switch-update = "nix --extra-experimental-features 'nix-command flakes' flake update --flake ~/.config/nix-darwin";
               switch-clean = "nix-collect-garbage -d";
+              switch-edit = "code ~/.config/nix-darwin";
             };
 
             # environment.variables = {
