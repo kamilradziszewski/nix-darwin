@@ -25,10 +25,13 @@ in
         bat
         fzf
         git
+        goku
         mas
         nixpkgs-fmt
         nodejs_22
+        nodePackages.http-server
         oh-my-posh
+        slack
         tmux
       ];
 
@@ -79,9 +82,11 @@ in
                 "catppuccin.accentColor" = "pink";
                 "catppuccin.colorOverrides" = {
                   "mocha" = {
-                    "base" = "#000000";
-                    "mantle" = "#010101";
-                    "crust" = "#020202";
+                    # "base" = "#1e1e2e"; # background
+                    # "mantle" = "#181825"; # toast, filename, file explorer
+                    # "crust" = "#11111b"; # border / status bars
+                    "base" = "#181825";
+                    "mantle" = "#141420";
                   };
                 };
                 "catppuccin.customUIColors" = {
@@ -90,6 +95,7 @@ in
                   };
                 };
 
+                # "editor.foldingImportsByDefault" = true;
 
                 "workbench.sideBar.location" = "right";
                 "editor.minimap.enabled" = false;
