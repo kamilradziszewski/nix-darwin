@@ -9,6 +9,8 @@
 
   extensions = [
     { id = "nngceckbapebfimnlniiiahkandclblb"; } # Bitwarden Password Manager
+    { id = "ldgfbffkinooeloadekpmfoklnobpien"; } # Raindrop.io
+
     # pkgs.chromium-ublock-origin
     # pkgs.chromium-privacy-badger
     # pkgs.chromium-dark-reader
