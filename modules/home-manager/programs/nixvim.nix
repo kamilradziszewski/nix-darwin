@@ -1,7 +1,21 @@
 {
   enable = true;
 
-  colorscheme = "catppuccin-mocha";
+  colorschemes.catppuccin.enable = true;
+
+  extraConfigLua = ''
+    require("catppuccin").setup({
+      flavour = "mocha",
+      color_overrides = {
+        mocha = {
+          base = "#181825";
+          mantle = "#141420";
+        },
+      },
+    })
+    vim.cmd[[colorscheme catppuccin]]
+  '';
+
 
   opts = {
     number = true;
