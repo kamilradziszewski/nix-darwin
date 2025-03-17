@@ -13,11 +13,11 @@ let
     jnoortheen.nix-ide # Nix ide
     esbenp.prettier-vscode # Prettier - Code formatter
     bradlc.vscode-tailwindcss # Tailwind CSS IntelliSense
-    usernamehw.remove-empty-lines # Remove empty lines
   ];
 in
 vscodeExtensions
 
+# usernamehw.remove-empty-lines # Remove empty lines
 # dejmedus.tailwind-sorter # Tailwind Sorter
 # aaron-bond.better-comments # Better Comments
 # bradlc.vscode-tailwindcss # Tailwind CSS IntelliSense

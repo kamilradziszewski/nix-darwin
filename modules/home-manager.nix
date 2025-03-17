@@ -171,7 +171,7 @@ in
                   "editor.formatOnPaste" = true;
                   "editor.formatOnSave" = true;
                   "editor.formatOnType" = false;
-                  "remove-empty-lines.allowedNumberOfEmptyLines" = 1;
+                  # "remove-empty-lines.allowedNumberOfEmptyLines" = 1;
                 };
                 "[lua]" = {
                   "editor.defaultFormatter" = "sumneko.lua";
