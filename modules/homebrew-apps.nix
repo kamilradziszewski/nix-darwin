@@ -7,6 +7,8 @@
     "ghostty"
     "hammerspoon"
     "oversight"
+    "pearcleaner"
+    "rocket"
     "raindropio"
   ];
 

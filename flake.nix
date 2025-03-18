@@ -74,10 +74,6 @@
               switch-edit = "code ~/.config/nix-darwin";
             };
 
-            # environment.variables = {
-            #   HOMEBREW_NO_ENV_HINTS = "1";
-            # };
-
             users.users."${username}" = {
               home = "/Users/${username}";
               description = username;
@@ -96,15 +92,13 @@
           mac-app-util.darwinModules.default
 
           home-manager.darwinModules.home-manager
-          (import ./modules/home-manager.nix { inherit nixpkgs username mac-app-util nixvim spoons; })
+          (import ./modules/home-manager { inherit nixpkgs username mac-app-util nixvim spoons; })
 
           nix-homebrew.darwinModules.nix-homebrew
           (import ./modules/nix-homebrew.nix { inherit username; })
 
-          ./modules/system.nix
+          (import ./modules/system { inherit username; })
         ];
       };
-
-      # formatter.${system} = nixpkgs.legacyPackages.${system}.alejandra;
     };
 }
