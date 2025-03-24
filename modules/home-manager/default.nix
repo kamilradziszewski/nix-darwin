@@ -20,16 +20,22 @@ in
 
     home.packages = with pkgs; [
       bat
+      bottom
       fzf
       git
       goku
+      lazygit
       mas
+      neovim
       nixpkgs-fmt
       nodejs_22
-      nodePackages.http-server
       oh-my-posh
+      ripgrep
       slack
       tmux
+
+      nerd-fonts.jetbrains-mono
+      nodePackages.http-server
     ];
 
     programs = {
@@ -37,7 +43,7 @@ in
       oh-my-posh = import ./programs/oh-my-posh.nix;
       zoxide = import ./programs/zoxide.nix;
       chromium = import ./programs/chromium.nix { inherit pkgs; };
-      nixvim = import ./programs/nixvim.nix;
+      # nixvim = import ./programs/nixvim.nix;
       vscode = import ./programs/vscode { inherit pkgs; };
     };
 

@@ -49,3 +49,11 @@ local windowsHalfAndThirdsHotkeys = {
     smaller      = { { "ctrl", "alt", }, "-" },
 }
 spoon.SpoonInstall:andUse("WindowHalfsAndThirds", { hotkeys = windowsHalfAndThirdsHotkeys })
+
+-- Spoon: WindowScreenLeftAndRight
+spoon.SpoonInstall:andUse("WindowScreenLeftAndRight", {
+    hotkeys = {
+        screen_left = { { "ctrl", "alt", "cmd" }, "Left" },
+        screen_right = { { "ctrl", "alt", "cmd" }, "Right" },
+    }
+})

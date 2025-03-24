@@ -16,9 +16,10 @@
   "editor.codeActionsOnSave" = { "source.fixAll.eslint" = "always"; "source.addMissingImports" = "always"; "source.organizeImports" = "always"; };
   "editor.defaultFormatter" = "esbenp.prettier-vscode";
   # "editor.foldingImportsByDefault" = true;
-  "editor.fontFamily" = "OperatorMono Nerd Font, JetBrainsMono Nerd Font, Menlo, Monaco, 'Courier New', monospace";
-  "editor.fontLigatures" = false;
-  "editor.fontSize" = 15;
+  # "editor.fontFamily" = "OperatorMono Nerd Font, JetBrainsMono Nerd Font, Menlo, Monaco, 'Courier New', monospace";
+  "editor.fontFamily" = "JetBrainsMono Nerd Font, Menlo, Monaco, 'Courier New', monospace";
+  "editor.fontLigatures" = true;
+  "editor.fontSize" = 14;
   "editor.formatOnPaste" = false;
   "editor.formatOnSave" = true;
   "editor.formatOnType" = false;

@@ -1,4 +1,5 @@
 # theme = "lovelace"
 # theme = "Banana Blueberry"
 theme = "CobaltNext-Dark"
+font-family = "JetBrainsMono Nerd Font"
 font-size = 16

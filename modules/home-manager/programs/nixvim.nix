@@ -1,5 +1,6 @@
 {
   enable = true;
+  globals.mapleader = " ";
 
   colorschemes.catppuccin.enable = true;
 
@@ -37,9 +38,11 @@
     lualine = {
       enable = true;
     };
+
     web-devicons = {
       enable = true;
     };
+
     telescope = {
       enable = true;
       settings = {
@@ -53,7 +56,12 @@
         };
       };
     };
-    nvim-tree = {
+
+    neo-tree = {
+      enable = true;
+    };
+
+    treesitter = {
       enable = true;
     };
   };
