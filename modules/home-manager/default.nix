@@ -53,6 +53,8 @@ in
       ".hammerspoon/init.lua".source = ./dotfiles/hammerspoon/init.lua;
       ".hammerspoon/modules/leftRightHotKey.lua".source =
         ./dotfiles/hammerspoon/modules/leftRightHotKey.lua;
+      # ".hammerspoon/modules/textExpansion.lua".source =
+      #   ./dotfiles/hammerspoon/modules/textExpansion.lua;
       ".hammerspoon/Spoons/SpoonInstall.spoon/init.lua".source =
         ./dotfiles/hammerspoon/SpoonInstall.spoon/init.lua;
     };

@@ -57,3 +57,7 @@ spoon.SpoonInstall:andUse("WindowScreenLeftAndRight", {
         screen_right = { { "ctrl", "alt", "cmd" }, "Right" },
     }
 })
+
+-- Text Expansion
+-- local textExpansion = require("modules.textExpansion")
+-- textExpansion.start()

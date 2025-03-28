@@ -15,6 +15,7 @@
     nr = "npm run ";
     ll = "ls -alh";
     cat = "bat";
+    lg = "lazygit";
   };
 
   oh-my-zsh = {
